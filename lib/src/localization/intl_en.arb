@@ -1,0 +1,53 @@
+{
+  "appTitle": "Template",
+  
+  "home": "Home",
+
+  "cart": "Cart",
+
+  "profile": "Profile",
+ 
+  "more": "More",
+ 
+  "settings": "Settings",
+ 
+  "basic": "Basic",
+ 
+  "advanced": "Advanced",
+ 
+  "performanceOverlay": "Performance Overlay",
+ 
+  "deleteDatabase": "Delete Database",
+ 
+  "viewDatabase": "View Database",
+ 
+  "urlConfig": "URL Config",
+ 
+  "theme": "Theme",
+ 
+  "switchToDarkTheme": "Switch to Dark Theme",
+  
+  "switchToLightTheme": "Switch to Light Theme",
+  
+  "language": "Language",
+ 
+  "currency": "Currency",
+ 
+  "currencyFormat": "Currency Format",
+ 
+  "dateFormat": "Date Format",
+ 
+  "timeFormat": "Time Format",
+
+  "font": "Font",
+
+  "signout": "Signout",
+
+  "about": "About",
+
+  "weAreUnderMaintenance": "We are Under Maintenance",
+
+  "weWillBeBackSoon": "We will be back soon!",
+
+  "contactWithAdmin": "Contact with Admin"
+}

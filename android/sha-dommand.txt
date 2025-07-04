@@ -1,0 +1,18 @@
+# Generate jks file
+`keytool -genkey -v -keystore android/app/sample.jks -keyalg RSA -keysize 2048 -validity 10000 -alias sample-app -storepass @Sample123 -keypass @Sample123 -dname "CN=Omnibyte, OU=Tech, O=Omnibyte, L=Dhaka, S=Dhaka, C=BD"`
+
+# Generate keystore certificate fingerprint (debug mode)
+`keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android`
+`
+Certificate fingerprints:
+         SHA1: 
+         SHA256: 
+`
+
+# Generate keystore certificate fingerprint (release mode)
+`keytool -list -v -keystore android/app/sample.jks -alias sample-app -storepass @Sample123 -keypass @Sample123`
+`
+Certificate fingerprints:
+         SHA1: 
+         SHA256: 
+`
