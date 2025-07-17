@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_template/src/core/utils/logger/logger_helper.dart';
-import '../base/api_client.dart';
-import '../config/get_platform.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../features/auth/presentation/view/signin_screen.dart';
 import '../../features/auth/presentation/view/signup_screen.dart';
 import '../../features/home/presentation/view/home_screen.dart';
-import 'package:go_router/go_router.dart';
-
 import '../../features/settings/presentation/view/setting_screen.dart';
 import '../../injector.dart';
+import '../base/api_client.dart';
+import '../config/get_platform.dart';
 import '../shared/maintenance_break/maintenance_break.dart';
 import '../shared/page_not_found/page_not_found.dart';
 import 'app_routes.dart';
@@ -50,26 +50,21 @@ final GoRouter goRouter = GoRouter(
 
     /// Maintenance Break
     if (AppRoutes.isMaintenanceBreak) {
-      log.f(
-          'Redirecting to ${AppRoutes.maintenanceBreakRoute} from $path Reason: Maintenance Break.');
+      log.f('Redirecting to ${AppRoutes.maintenanceBreakRoute} from $path Reason: Maintenance Break.');
       return AppRoutes.maintenanceBreakRoute;
     }
-    if (!AppRoutes.isMaintenanceBreak &&
-        path == AppRoutes.maintenanceBreakRoute) {
-      log.f(
-          'Redirecting to ${AppRoutes.homeRoute} from $path Reason: Maintenance Break ended.');
+    if (!AppRoutes.isMaintenanceBreak && path == AppRoutes.maintenanceBreakRoute) {
+      log.f('Redirecting to ${AppRoutes.homeRoute} from $path Reason: Maintenance Break ended.');
       return AppRoutes.homeRoute;
     }
 
     /// Auth
     if (!loggedIn && AppRoutes.allAuthRequiredRoutes.contains(path)) {
-      log.f(
-          'Redirecting to ${AppRoutes.signinRoute} from $path Reason: Authentication.');
+      log.f('Redirecting to ${AppRoutes.signinRoute} from $path Reason: Authentication.');
       return AppRoutes.signinRoute;
     }
     if (loggedIn && AppRoutes.authRelatedRoutes.contains(path)) {
-      log.f(
-          'Redirecting to ${AppRoutes.homeRoute} from $path Reason: Already logged in.');
+      log.f('Redirecting to ${AppRoutes.homeRoute} from $path Reason: Already logged in.');
       return AppRoutes.homeRoute;
     }
     return null;
@@ -77,7 +72,6 @@ final GoRouter goRouter = GoRouter(
 );
 
 extension GoRouteExtension on BuildContext {
-  goPush<T>(String route, {Object? extra}) => sl<PT>().isWeb
-      ? GoRouter.of(this).go(route, extra: extra)
-      : GoRouter.of(this).push(route, extra: extra);
+  goPush<T>(String route, {Object? extra}) =>
+      sl<PT>().isWeb ? GoRouter.of(this).go(route, extra: extra) : GoRouter.of(this).push(route, extra: extra);
 }
