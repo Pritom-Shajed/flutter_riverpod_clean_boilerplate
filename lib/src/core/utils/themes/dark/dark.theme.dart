@@ -23,6 +23,7 @@ const _cardBackgroundColor = Color.fromARGB(255, 0, 0, 0);
 const _scaffoldBackgroundColor = Color(0xFF181A20);
 const _appBarBackgroundColor = Color(0xFF181A20);
 const _bottomSheetBackgroundColor = Color(0xFF181A20);
+const _bottomAppBarColor = AppColors.darkAshColor;
 const _floatingActionButtonColor = AppColors.primaryColor;
 final _shadowColor = AppColors.shadowColor;
 
@@ -68,7 +69,10 @@ final darkTheme = ThemeData(
   primaryIconTheme: const IconThemeData(color: darkPrimaryColor),
   pageTransitionsTheme: _pageTransitionTheme,
   bottomSheetTheme: _bottomSheetTheme,
+  bottomAppBarTheme: _bottomAppBarTheme,
 );
+
+final _bottomAppBarTheme = BottomAppBarThemeData(color: _bottomAppBarColor, elevation: 4);
 
 final _bottomSheetTheme = BottomSheetThemeData(
   backgroundColor: _bottomSheetBackgroundColor,
@@ -181,7 +185,7 @@ final _tooltipTheme = TooltipThemeData(
 
 final _appBarTheme = AppBarTheme(
   iconTheme: const IconThemeData(color: _iconColorSecondary),
-  color: _appBarBackgroundColor,
+  backgroundColor: _appBarBackgroundColor,
   elevation: 0.0,
   titleTextStyle: _textTheme.titleLarge,
 );
@@ -223,7 +227,7 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
 const _textTheme = TextTheme(
   titleSmall: TextStyle(fontWeight: FontWeight.w700, color: _titleTextColor),
   titleMedium: TextStyle(fontWeight: FontWeight.w700, color: _titleTextColor),
-  titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20.0, color: _titleTextColor),
+  titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0, color: _titleTextColor),
   labelSmall: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700, letterSpacing: 0.7),
   labelMedium: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700),
   labelLarge: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700),

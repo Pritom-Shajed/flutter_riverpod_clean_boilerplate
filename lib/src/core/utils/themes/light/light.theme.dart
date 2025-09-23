@@ -10,7 +10,7 @@ const lightUiConfig = SystemUiOverlayStyle(
   systemNavigationBarColor: Colors.white,
   systemNavigationBarIconBrightness: Brightness.dark,
 );
-
+const appbarColor = Color(0xfffff6ee);
 const lightPrimaryColor = AppColors.primaryColor;
 const _headLineTextColor = AppColors.secondaryColor;
 const _iconColorSecondary = AppColors.secondaryColor;
@@ -23,6 +23,7 @@ const _primaryLightColor = AppColors.primaryColor;
 final _cardBackgroundColor = Colors.white;
 const _scaffoldBackgroundColor = Color(0xFFF3F5FB);
 const _bottomSheetBackgroundColor = Colors.white;
+const _bottomAppBarColor = AppColors.darkAshColor;
 const _appBarBackgroundColor = Colors.white;
 const _floatingActionButtonColor = AppColors.primaryColor;
 final _shadowColor = AppColors.shadowColor;
@@ -69,7 +70,10 @@ final lightTheme = ThemeData(
   primaryIconTheme: const IconThemeData(color: lightPrimaryColor),
   pageTransitionsTheme: _pageTransitionTheme,
   bottomSheetTheme: _bottomSheetTheme,
+  bottomAppBarTheme: _bottomAppBarTheme,
 );
+
+final _bottomAppBarTheme = BottomAppBarThemeData(color: _bottomAppBarColor, elevation: 4);
 
 final _bottomSheetTheme = BottomSheetThemeData(
   backgroundColor: _bottomSheetBackgroundColor,
@@ -192,7 +196,7 @@ final _tooltipTheme = TooltipThemeData(
 );
 final _appBarTheme = AppBarTheme(
   iconTheme: const IconThemeData(color: _iconColorSecondary),
-  color: _appBarBackgroundColor,
+  backgroundColor: _appBarBackgroundColor,
   elevation: 0.0,
   titleTextStyle: _textTheme.titleLarge,
 );
@@ -234,7 +238,7 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
 const _textTheme = TextTheme(
   titleSmall: TextStyle(fontWeight: FontWeight.w700, color: _titleTextColor),
   titleMedium: TextStyle(fontWeight: FontWeight.w700, color: _titleTextColor),
-  titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20.0, color: _titleTextColor),
+  titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0, color: _titleTextColor),
   labelSmall: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700, letterSpacing: 0.7),
   labelMedium: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700),
   labelLarge: TextStyle(color: _bodyTextColor, fontWeight: FontWeight.w700),

@@ -7,7 +7,6 @@ import 'package:path/path.dart';
 
 import '../../../features/settings/data/repositories/hive_repository_impl.dart';
 import '../../../injector.dart';
-import '../../shared/router/custom_routes.dart';
 
 part 'src/color.dart';
 part 'src/context.dart';
