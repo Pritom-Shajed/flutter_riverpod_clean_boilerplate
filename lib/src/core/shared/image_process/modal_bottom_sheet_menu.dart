@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,10 +19,7 @@ Future<XFile?> modalBottomSheetMenu(
   return showModalBottomSheet(
     elevation: 2.0,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16.0),
-        topRight: Radius.circular(16.0),
-      ),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
     ),
     context: context,
     builder: (_) => Column(
@@ -29,11 +27,7 @@ Future<XFile?> modalBottomSheetMenu(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0),
-          child: Text(
-            'Choose an Option',
-            style: context.theme.textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
+          child: Text('Choose an Option', style: context.theme.textTheme.titleMedium, textAlign: TextAlign.center),
         ),
         ListTile(
           leading: const Icon(Icons.photo_camera),
@@ -97,11 +91,7 @@ Future<XFile?> modalBottomSheetMenu(
             });
           },
         ),
-        ListTile(
-          leading: const Icon(Icons.cancel),
-          title: const Text('Cancel'),
-          onTap: () => context.pop(null),
-        ),
+        ListTile(leading: const Icon(Icons.cancel), title: const Text('Cancel'), onTap: () => context.pop(null)),
       ],
     ),
   );

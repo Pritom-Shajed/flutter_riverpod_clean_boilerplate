@@ -3,6 +3,7 @@ import 'package:flutter_clean_architecture_template/src/core/shared/riverpod/hel
 import 'package:flutter_clean_architecture_template/src/core/utils/extensions/extensions.dart';
 import 'package:flutter_clean_architecture_template/src/features/settings/presentation/view/setting_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../provider/home_provider.dart';
 

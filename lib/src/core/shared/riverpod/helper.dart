@@ -22,12 +22,8 @@ class KLoading extends StatelessWidget {
       color: context.theme.scaffoldBackgroundColor,
       child: Center(
         child: Container(
-          constraints:
-              const BoxConstraints.tightFor(width: 100.0, height: 100.0),
-          child: SpinKitThreeBounce(
-            color: context.theme.primaryColor,
-            size: 30.0,
-          ),
+          constraints: const BoxConstraints.tightFor(width: 100.0, height: 100.0),
+          child: SpinKitThreeBounce(color: context.theme.primaryColor, size: 30.0),
         ),
       ),
     );
@@ -48,16 +44,9 @@ class KError extends StatelessWidget {
         child: Column(
           mainAxisSize: mainMin,
           children: [
-            const Icon(
-              Icons.error,
-              size: 20.0,
-              color: Colors.red,
-            ),
+            const Icon(Icons.error, size: 20.0, color: Colors.red),
             const SizedBox(height: 5.0),
-            Text(
-              'Error: $e',
-              style: const TextStyle(color: Colors.red),
-            ),
+            Text('Error: $e', style: const TextStyle(color: Colors.red)),
           ],
         ),
       ),

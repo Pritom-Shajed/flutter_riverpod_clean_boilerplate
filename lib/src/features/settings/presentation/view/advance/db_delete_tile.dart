@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_template/src/core/shared/asset_helper/asset_helper.dart';
 import 'package:flutter_clean_architecture_template/src/core/shared/asset_helper/assets.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/shared/animations_widget/animated_popup.dart';
 import '../../../../../core/shared/animations_widget/animated_widget_shower.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_template/src/core/shared/asset_helper/asset_helper.dart';
+import 'package:flutter_clean_architecture_template/src/localization/app_locale.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/config/constants.dart';
@@ -10,7 +11,6 @@ import '../../../../../core/shared/animations_widget/animated_widget_shower.dart
 import '../../../../../core/shared/asset_helper/assets.dart';
 import '../../../../../core/shared/k_list_tile.dart/k_list_tile.dart';
 import '../../../../../core/utils/extensions/extensions.dart';
-import 'package:flutter_clean_architecture_template/src/localization/app_locale.dart';
 import '../../providers/date_format_provider.dart';
 
 class DateFormatTile extends StatelessWidget {
@@ -19,14 +19,8 @@ class DateFormatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KListTile(
-      leading: AnimatedWidgetShower(
-        size: 30.0,
-        child: AssetHelper.createSvgAsset(assetPath: SvgAssets.dateFormat),
-      ),
-      title: Text(
-        t.dateFormat,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
+      leading: AnimatedWidgetShower(size: 30.0, child: AssetHelper.createSvgAsset(assetPath: SvgAssets.dateFormat)),
+      title: Text(t.dateFormat, style: const TextStyle(fontWeight: FontWeight.bold)),
       trailing: OutlinedButton.icon(
         style: OutlinedButton.styleFrom(minimumSize: const Size(50, 48)),
         onPressed: () async => await showDialog(
@@ -34,17 +28,15 @@ class DateFormatTile extends StatelessWidget {
           barrierDismissible: false,
           builder: (context) => const DateFormatChangerPopup(),
         ),
-        label: Icon(
-          Icons.arrow_forward_ios_rounded,
-          size: 15.0,
-          color: context.theme.primaryColor,
+        label: Icon(Icons.arrow_forward_ios_rounded, size: 15.0, color: context.theme.primaryColor),
+        icon: Consumer(
+          builder: (_, ref, __) {
+            return Text(
+              DateFormat(ref.watch(dateFormatProvider)).format(DateTime.now()),
+              style: context.text.bodySmall!.copyWith(fontSize: 13.0, color: Colors.black),
+            );
+          },
         ),
-        icon: Consumer(builder: (_, ref, __) {
-          return Text(
-            DateFormat(ref.watch(dateFormatProvider)).format(DateTime.now()),
-            style: context.theme.textTheme.bodySmall!.copyWith(fontSize: 13.0),
-          );
-        }),
       ),
     );
   }
@@ -75,27 +67,20 @@ class DateFormatChangerPopup extends ConsumerWidget {
               ...List.generate(
                 dateFormates.length,
                 (index) => KListTile(
-                  onTap: () async => await ref
-                      .read(dateFormatProvider.notifier)
-                      .changeDateFormat(dateFormates[index])
-                      .then((_) {
-                    if (!context.mounted) return;
-                    context.pop();
-                  }),
+                  onTap: () async =>
+                      await ref.read(dateFormatProvider.notifier).changeDateFormat(dateFormates[index]).then((_) {
+                        if (!context.mounted) return;
+                        context.pop();
+                      }),
                   leading: Radio<String?>(
                     value: dateFormates[index],
                     groupValue: ref.watch(dateFormatProvider),
-                    onChanged: (v) async => await ref
-                        .read(dateFormatProvider.notifier)
-                        .changeDateFormat(v!)
-                        .then((_) {
+                    onChanged: (v) async => await ref.read(dateFormatProvider.notifier).changeDateFormat(v!).then((_) {
                       if (!context.mounted) return;
                       context.pop();
                     }),
                   ),
-                  title: Text(
-                    DateFormat(dateFormates[index]).format(DateTime.now()),
-                  ),
+                  title: Text(DateFormat(dateFormates[index]).format(DateTime.now())),
                 ),
               ),
             ],

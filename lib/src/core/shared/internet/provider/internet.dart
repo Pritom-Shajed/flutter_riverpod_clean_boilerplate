@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/logger/logger_helper.dart';
 
-final internetStreamPd =
-    StreamProvider((ref) => Connectivity().onConnectivityChanged);
+final internetStreamPd = StreamProvider((ref) => Connectivity().onConnectivityChanged);
 
 final internetFuturePd = FutureProvider<bool>((ref) async {
   ref.watch(internetStreamPd).value;
@@ -18,5 +17,11 @@ final internetFuturePd = FutureProvider<bool>((ref) async {
   return false;
 });
 
-final isConnectedPd = StateProvider<bool>(
-    (ref) => ref.watch(internetFuturePd).value ?? false);
+final isConnectedPd = NotifierProvider<ConnectivityNotifier, bool>(ConnectivityNotifier.new);
+
+class ConnectivityNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return ref.watch(internetFuturePd).value ?? false;
+  }
+}

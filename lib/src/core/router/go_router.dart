@@ -17,26 +17,10 @@ final GoRouter goRouter = GoRouter(
   initialLocation: AppRoutes.homeRoute,
   errorBuilder: (_, __) => const KPageNotFound(error: '404 - Page not found!'),
   routes: <RouteBase>[
-    GoRoute(
-      path: AppRoutes.homeRoute,
-      name: HomeScreen.name,
-      builder: (_, __) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.signinRoute,
-      name: SigninScreen.name,
-      builder: (_, __) => const SigninScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.signupRoute,
-      name: SignupScreen.name,
-      builder: (_, __) => const SignupScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.settingsRoute,
-      name: SettingsScreen.name,
-      builder: (_, __) => const SettingsScreen(),
-    ),
+    GoRoute(path: AppRoutes.homeRoute, name: HomeScreen.name, builder: (_, __) => const HomeScreen()),
+    GoRoute(path: AppRoutes.signinRoute, name: SigninScreen.name, builder: (_, __) => const SigninScreen()),
+    GoRoute(path: AppRoutes.signupRoute, name: SignupScreen.name, builder: (_, __) => const SignupScreen()),
+    GoRoute(path: AppRoutes.settingsRoute, name: SettingsScreen.name, builder: (_, __) => const SettingsScreen()),
     GoRoute(
       path: AppRoutes.maintenanceBreakRoute,
       name: MaintenanceBreak.name,
@@ -72,6 +56,6 @@ final GoRouter goRouter = GoRouter(
 );
 
 extension GoRouteExtension on BuildContext {
-  goPush<T>(String route, {Object? extra}) =>
+  void goPush<T>(String route, {Object? extra}) =>
       sl<PT>().isWeb ? GoRouter.of(this).go(route, extra: extra) : GoRouter.of(this).push(route, extra: extra);
 }
