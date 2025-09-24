@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:awesome_dio_interceptor/awesome_dio_interceptor.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_architecture_template/src/core/base/endpoints/api_endpoints.dart';
 import 'package:flutter_clean_architecture_template/src/core/base/enum/method.dart';
 import 'package:flutter_clean_architecture_template/src/core/base/failure/failure.dart';
+import 'package:flutter_clean_architecture_template/src/core/base/interceptors/refresh_token_interceptor.dart';
 import 'package:flutter_clean_architecture_template/src/core/base/model/api_response.dart';
 import 'package:flutter_clean_architecture_template/src/core/base/model/auth_store.dart';
 import 'package:flutter_clean_architecture_template/src/core/config/constants.dart';
@@ -46,23 +48,21 @@ class ApiClient {
   }
 
   void _configureDio() {
-    final baseUrl = sl<AppSettings>().isProduction
-        ? Environment.prodBaseUrl
-        : Environment.devBaseUrl;
+    final baseUrl = sl<AppSettings>().isProduction ? Environment.prodBaseUrl : Environment.devBaseUrl;
 
     dio.options.baseUrl = baseUrl;
-    dio.options.headers = {
-      HttpHeaders.contentTypeHeader: 'application/json',
-    };
+    dio.options.headers = {HttpHeaders.contentTypeHeader: 'application/json'};
 
-    dio.interceptors.add(
+    dio.interceptors.addAll([
       InterceptorsWrapper(
         onError: (DioException e, handler) async {
           log.e('Dio Error: ${e.message}');
           return handler.next(e);
         },
       ),
-    );
+      // RefreshTokenInterceptor(dio: dio, apiClient: this),
+      AwesomeDioInterceptor(logResponseHeaders: false),
+    ]);
   }
 
   bool get isLoggedIn => authStore != null && authStore!.accessToken.isNotEmpty;
@@ -86,10 +86,7 @@ class ApiClient {
     log.f('Refresh token: ${authStore!.refreshToken}');
 
     log.i('Token refreshing...');
-    final response = await dio.post(
-      '/${ApiEndpoints.refreshToken}',
-      data: {'refresh-token': authStore!.refreshToken},
-    );
+    final response = await dio.post('/${ApiEndpoints.refreshToken}', data: {'refresh-token': authStore!.refreshToken});
 
     final apiResponse = ApiResponse.fromRawJson(jsonEncode(response.data));
     if (!apiResponse.success) throw apiResponse.message;
@@ -113,34 +110,42 @@ class ApiClient {
       if (token == null) throw 'Session expired. Please sign in again.';
     }
 
-    final headers = {
-      'Content-Type': 'application/json',
-      if (isAuthRequired) 'Authorization': 'Bearer $token',
-    };
+    final headers = {'Content-Type': 'application/json', if (isAuthRequired) 'Authorization': 'Bearer $token'};
 
     Response response;
 
     try {
       switch (method) {
         case ApiClientMethod.get:
-          response =
-              await dio.get('/$endPoint', options: Options(headers: headers));
+          response = await dio.get('/$endPoint', options: Options(headers: headers));
           break;
         case ApiClientMethod.post:
-          response = await dio.post('/$endPoint',
-              data: data, options: Options(headers: headers));
+          response = await dio.post(
+            '/$endPoint',
+            data: data,
+            options: Options(headers: headers),
+          );
           break;
         case ApiClientMethod.put:
-          response = await dio.put('/$endPoint',
-              data: data, options: Options(headers: headers));
+          response = await dio.put(
+            '/$endPoint',
+            data: data,
+            options: Options(headers: headers),
+          );
           break;
         case ApiClientMethod.delete:
-          response = await dio.delete('/$endPoint',
-              data: data, options: Options(headers: headers));
+          response = await dio.delete(
+            '/$endPoint',
+            data: data,
+            options: Options(headers: headers),
+          );
           break;
         case ApiClientMethod.patch:
-          response = await dio.patch('/$endPoint',
-              data: data, options: Options(headers: headers));
+          response = await dio.patch(
+            '/$endPoint',
+            data: data,
+            options: Options(headers: headers),
+          );
           break;
       }
 
@@ -159,10 +164,7 @@ class ApiClient {
     }
   }
 
-  ResultFuture<Response> storeFile(
-    List<String> paths, {
-    bool isAuthRequired = true,
-  }) async {
+  ResultFuture<Response> storeFile(List<String> paths, {bool isAuthRequired = true}) async {
     String? token;
     if (isAuthRequired) {
       token = await _token;
@@ -171,15 +173,10 @@ class ApiClient {
 
     final formData = FormData();
     for (final path in paths) {
-      formData.files.add(MapEntry(
-        'files',
-        await MultipartFile.fromFile(path, filename: path.split('/').last),
-      ));
+      formData.files.add(MapEntry('files', await MultipartFile.fromFile(path, filename: path.split('/').last)));
     }
 
-    final headers = {
-      if (isAuthRequired) 'Authorization': 'Bearer $token',
-    };
+    final headers = {if (isAuthRequired) 'Authorization': 'Bearer $token'};
 
     try {
       final response = await dio.post(
